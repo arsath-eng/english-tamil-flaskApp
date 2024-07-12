@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English to Tamil Translation with Technical Terms Preserved</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        p {
+            text-align: center;
+            color: #666;
+        }
+        .container {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            padding: 10px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        #clear {
+            background-color: #e9ecef;
+            color: #495057;
+        }
+        #submit {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        #result {
+            background-color: #fff;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            padding: 10px;
+            min-height: 150px;
+        }
+    </style>
+</head>
+<body>
+    <h1>English to Tamil Translation with Technical Terms Preserved</h1>
+    <p>This app translates English text to Tamil while preserving technical terms. Technical terms are highlighted in bold in the output.</p>
+    
+    <div class="container">
+        <h3>English Text</h3>
+        <textarea id="input" placeholder="Enter English text here"></textarea>
+        <div class="buttons">
+            <button id="clear">Clear</button>
+            <button id="submit">Submit</button>
+        </div>
+        
+        <h3>Tamil Translation</h3>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#submit').click(function() {
+                var text = $('#input').val();
+                $.ajax({
+                    url: '/translate',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ text: text }),
+                    success: function(response) {
+                        $('#result').html(response.translation);
+                    },
+                    error: function() {
+                        $('#result').text('An error occurred during translation.');
+                    }
+                });
+            });
+
+            $('#clear').click(function() {
+                $('#input').val('');
+                $('#result').html('');
+            });
+        });
+    </script>
+</body>
+</html>
